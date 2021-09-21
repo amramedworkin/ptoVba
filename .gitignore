@@ -4,6 +4,7 @@
 
 # Data
 /data/test/temp*.*
+/data/test/*step*.xlsm
 
 # Logs
 logs
