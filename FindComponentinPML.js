@@ -285,7 +285,7 @@ function  FindComponentinPML(tables) {
       }
     }
   } // Next CyberRowCnt
-  console.time("FindComponentinPML")
+  console.timeEnd("FindComponentinPML")
 } // End Sub FindComponentinPML(
 
 

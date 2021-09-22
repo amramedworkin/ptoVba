@@ -47,7 +47,7 @@ function MatchOnSDAP(tables) {
 		sdapTable.forEach(sdapRow => {
 			if(ecmoRow._key == sdapRow._key) {
 				if (sdapRow['ADDED: Component Name']) {
-					ecmoRow['SDAP Exact Match'] = 
+					ecmoRow['SDAP EXACT MATCH'] = 
 						(sdapRow['ADDED: Component Name'] || '')
 							.toUpperCase()
 							.trim()
@@ -56,7 +56,7 @@ function MatchOnSDAP(tables) {
 			}
 		})
 	})
-	console.log('MatchOnSDAP=%d matched',ecmoTable.filter(row=>{return row['SDAP Exact Match'] != null}).length)
+	console.log('MatchOnSDAP=%d matched',ecmoTable.filter(row=>{return row['SDAP EXACT MATCH'] != null}).length)
 	console.timeEnd('MatchOnSDAP')
 }
 

@@ -45,9 +45,9 @@ function getAllTables(inputs) {
 }
 
 
-function writeSheetToBook(sheets) {
+function writeWorkbook(prefix,sheets) {
   var book = xlsx.utils.book_new();
-  var bookName = './data/test/temp' + Date.now() + '.xlsx'
+  var bookName = './data/test/output/' + (prefix || 'temp') + '_' + Date.now() + '.xlsx'
   var timerPrompt = 'Creating Book [' + bookName + ']'
   console.time(timerPrompt)
 
@@ -61,4 +61,4 @@ function writeSheetToBook(sheets) {
   console.timeEnd(timerPrompt)
 }
 module.exports.getAllTables = getAllTables
-module.exports.writeSheetToBook = writeSheetToBook
+module.exports.writeWorkbook = writeWorkbook

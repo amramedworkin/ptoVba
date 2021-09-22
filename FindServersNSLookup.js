@@ -187,7 +187,8 @@ function FindServersNSLookup(tables) {
             } // End If
         } // Next iCyberServerList
           
-        var cyberlistRow = cyberlistTable[CyberListfromCNSLookupSRowCnt]
+        var cyberlistRow = {}
+        cyberlistTable.push(cyberlistRow)
         if (FoundServer == false) {
             var CyberServerList = CyberServerList + ";" + CyberComputerName
             cyberlistRow[CyberListfromCNSLookupSServersCyberServersCol] = CyberComputerName.toLowerCase()
