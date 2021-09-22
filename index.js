@@ -53,23 +53,24 @@ try
 {
 	ptoMatch.ExactCyberToGEARSServerMatch(tables)
 	ptoMatch.IdentifyType(tables)
+	ptoUtils.writeSheetToBook(
+		[
+			{name: 'Cyber',data:tables['ecmo']}
+			// ,{name: 'GEARS',data:tables['gears']}
+			// ,{name: 'SDAP',data:tables['sdap']}
+			// ,{name: 'Dev',data:tables['dev']}
+			// ,{name: 'ExactMatch',data:tables['exactmatch']}
+		])	
 	ptoMatch.MoveCyberNonProd(tables)
 	ptoMatch.MatchOnSDAP(tables)
 	ptoMatch.CheckManual(tables)
 	ptoMatch.DiamondCheck(tables)
-	ptoUtils.writeSheetToBook(
-		[
-			{name: 'Cyber',data:tables['ecmo']}
-			,{name: 'GEARS',data:tables['gears']}
-			,{name: 'SDAP',data:tables['sdap']}
-			,{name: 'Dev',data:tables['dev']}
-			,{name: 'ExactMatch',data:tables['exactmatch']}
-		])	
 	ptoFindComponents.FindComponentinPML(tables)
 	ptoServerSw.ServerSWUpdates(tables)
 	ptoFindServers.FindServersNSLookup(tables)
 } catch(err) {
 	console.error(2,err)
+	console.error(2,err.stack)
 } finally {
 	console.timeEnd('MAIN PROGRAM')
 }

@@ -1,7 +1,8 @@
-function  FindComponentinPML(tables)
-{  // fuzzy logic to find component to server association
+function  FindComponentinPML(tables) {   
+  // fuzzy logic to find component to server association
   // does delimited server name to component exact match
   // does server pattern match using archserversoftware and archdatabase
+  console.time("FindComponentinPML")
   var ComponentNameAry = []
   // var ComponentName = ''
   // var i = 0
@@ -24,8 +25,10 @@ function  FindComponentinPML(tables)
   var SelectedGreenCnt  = 0
   // var ConcatenationFound = false
   // var CyberServerAllAry = []
-  var PMLComponentNameMatchAllAry = new Array(800).fill('')
-  var PMLComponentNameAllAry = new Array(800).fill('')
+  // var PMLComponentNameMatchAllAry [= new Array(800).fill('')]
+  // var PMLComponentNameAllAry = new Array(800).fill('')
+  var PMLComponentNameMatchAllAry = []
+  var PMLComponentNameAllAry = []
   var PMLComponentNameAllCnt = 0
   var CyberComputerNameLong = ''
 
@@ -94,7 +97,8 @@ function  FindComponentinPML(tables)
         PMLComponentNameMatchAllAry[PMLComponentNameAllCnt] = ComponentNamePML
         PMLComponentNameAllAry[PMLComponentNameAllCnt] = ComponentNamePMLStart
       
-        if( ComponentNamePMLStart.indexOf('-') > -1 || ComponentNamePMLStart.indexOf(' ') > -1) {
+        if( (ComponentNamePMLStart || '').indexOf('-') > -1 
+        || (ComponentNamePMLStart || '').indexOf(' ') > -1) {
           for(var i = 0;
                   i < PMLComponentNameMatchAllAry.length;
                   i++) {
@@ -145,7 +149,7 @@ function  FindComponentinPML(tables)
       
     if(cyberRow[CyberComponentNameFromGEARSCol] == '') {
 
-      if(CyberComputerName.indexOf('-') == -1) {
+      if((CyberComputerName || '').indexOf('-') == -1) {
         FoundComponentGreen = 99
       } else {
         ComponentNameAry = CyberComputerName.split("-")
@@ -281,7 +285,8 @@ function  FindComponentinPML(tables)
       }
     }
   } // Next CyberRowCnt
-} // End Sub
+  console.time("FindComponentinPML")
+} // End Sub FindComponentinPML(
 
 
 // function  CheckConcatenation (
@@ -441,7 +446,7 @@ function  ServerCheck(
     ServerNSLookupGEARS = (gearsRow[GEARSServerNSLookupCol] || '').toUpperCase().trim()
     ComponentNameGEARS = (gearsRow[GEARSComponentNameCol] || '').toUpperCase().trim()
 
-    if( ServerNameGEARS.indexOf(CyberComputerNameHold) > -1 ) {
+    if( (ServerNameGEARS || '').indexOf(CyberComputerNameHold) > -1 ) {
       cyberRow[CyberComponentNameFromGEARSCol] = ComponentNameGEARS
       ServerMatchCnt = ServerMatchCnt + 1
     } // End if
@@ -514,7 +519,7 @@ function  CorrectPMLwithDash(
     var cyberRow = cyberTable[CyberRowCnt]
     ComponentNamePML = cyberRow[CyberComponentNameFromPMLCol]
     
-    if( ComponentNamePML.indexOf("-") > -1 ) {
+    if( (ComponentNamePML || '').indexOf("-") > -1 ) {
       CyberComputerName = (cyberRow[CyberComputerNameCol] || '').toUpperCase().trim()
       if ( CyberComputerName.indexOf(ComponentNamePML) == -1) {
         // eslint-disable-next-line no-redeclare
