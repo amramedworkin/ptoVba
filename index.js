@@ -50,11 +50,14 @@ console.time('MAIN PROGRAM')
 // Read all excel tables
 var tables = ptoUtils.getAllTables(inputs);
 
-// ptoCheckAndMatch.:ExactCyberToGEARSServerMatch()
 try
 {
+	console.time('Strip USPTO')
 	ptoMatch.ClearUsptoDotGov(tables['ecmo'])
 	ptoMatch.ClearUsptoDotGov(tables['gears'])
+	ptoMatch.ClearUsptoDotGov(tables['diamond'])
+	ptoMatch.ClearUsptoDotGov(tables['server'])
+	console.timeEnd('Strip USPTO')
 	// ptoMatch.ClearUsptoDotGov(tables['sdap'])
 	ptoMatch.ExactCyberToGEARSServerMatch(tables)
 	// writeNewWorkbook('NODE-exactcybertogearsservermatch',inputs,tables,['ecmo'],true)	

@@ -129,6 +129,7 @@ function  FindComponentinPML(tables) {
     //  Check Patterns of Servers
     var CyberComputerNameHold = CyberComputerName
 
+    
     // ServerCheck looks for exact match of the pattern and a string search of the pattern.  
     //	if exact match, it picks up the software otherwise it does not
     // 	TODO: is the string search accurate enough to pickup software too
@@ -419,7 +420,7 @@ function  ServerCheck(
                     iSoftwareNameAry < SoftwareNameGEARSAry.length;
                     iSoftwareNameAry++) 
             {
-              if (SoftwareNameGEARS == SoftwareNameGEARSAry(iSoftwareNameAry)) 
+              if (SoftwareNameGEARS == SoftwareNameGEARSAry[iSoftwareNameAry]) 
               {
                 FoundSoftware = true
                 cyberRow[CyberGEARSServerCol] = cyberRow[CyberGEARSServerCol] + "," + ServerNameGEARSHold

@@ -7,9 +7,9 @@ function ClearUsptoDotGov(table) {
 	table.forEach(row => {
 		for (var prop in row) {
 			if (Object.prototype.hasOwnProperty.call(row, prop)) {
-				if (typeof prop === 'string' && prop.toLowerCase().match(/\.uspto.gov/i) )
+				if (typeof row[prop] === 'string' && row[prop].toLowerCase().match(/\.uspto.gov/i) )
 				{
-					prop = prop.replace(searchRegExp,replaceWith)
+					row[prop] = row[prop].replace(searchRegExp,replaceWith)
 				}
 			}
 		}
