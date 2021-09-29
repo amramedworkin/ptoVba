@@ -10,8 +10,13 @@ const xlsx = require('xlsx')
 function excelToJson(excelFileName,sheetName) {
 	// Read the excel workbook
 	const book = xlsx.readFile(excelFileName)
+  var sheet
 	// Grab the sheet of interest
-	const sheet = book.Sheets[sheetName]
+  if (Object.entries(book.Sheets).length == 1) {
+    // eslint-disable-next-line no-unused-vars
+    sheetName = Object.entries(book.Sheets).map(([key,value]) => key)
+  }
+  sheet = book.Sheets[sheetName]
 	// Convert sheet to usable json.
 	return xlsx.utils.sheet_to_json(sheet)
 }
@@ -52,7 +57,7 @@ function writeWorkbook(prefix,sheets) {
   console.time(timerPrompt)
 
   sheets.forEach(sheetRow => {
-    console.log('Converting Sheet [%s]',sheetRow.name)
+    console.log('Converting Sheet [%s-%d]',sheetRow.name,sheetRow.data.length)
     var sheet = xlsx.utils.json_to_sheet(sheetRow.data);
     xlsx.utils.book_append_sheet(book, sheet, sheetRow.name)
   })

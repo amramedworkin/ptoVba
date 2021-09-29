@@ -4,7 +4,13 @@
 
 # Data
 /data/test/temp*.*
-/data/test/*.xlsm
+/data/test/vba/*.xlsm
+/data/test/*.log
+/scripts/vba/*.cls
+/data/test/ouptut/*.xlst
+/data/test/ouptut/*.xlsm
+/data/test/node/*.*
+/data/test/vba/*.*
 
 # Logs
 logs

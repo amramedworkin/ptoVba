@@ -1,0 +1,27 @@
+Step 1 - download latest ecmo report
+Step 2 - Migrate VBA code into workbook
+Step 3 - run PrepWorkbook vba code
+Step 4 - add gears data from arch server sw, arch database, archserverswunknown and archserverdatabaseunknown - use AmyBF and Big Fix views	from spreadsheet
+Step 5 - Run an NSLookup powershell script on GEARS data
+Step 6 - remove .uspto.gov from ecmo and gears tabs	
+Step 7 - run ExactCybertoGEARSServerMatch vba code	performed by servers object load process
+Step 8 - run IdentifyType vba code	performed by section of code marked by IdentifyMatch
+Step 9 - Run MoveCyberNonProd vba code	performed by section of code marked by MoveCyberNoProd
+Step 10 - Move in SDAP data	from spreadsheet
+Step 11 - run MatchOnSDAP code	perform servers object load process
+Step 12 - Move in manual tab�	from spreadsheet
+Step 13 - RunCheckManual code	perform servers object load process
+Step 14 - Download Diamond (formally mysae) data - remove .uspto.gov� �https://diamond.uspto.gov/login�select Hosts select Data Center column layout	from spreadsheet
+Step 15 - Run DiamondCheck vba code	perform servers object load process
+Step 16 - Download PML (Components List)	
+Step 17 - Run FindComponentinPML vba code (takes approx 35 mins)	
+Step 18 - download servers list remove .uspto.gov - use BigFix view	
+Step 19 - Run ServerSWUpdate vba code	
+Step 20 - Run FindServersNSLookup vba code�	
+-Update GEARS if necessary	
+� -add New ServerSW from ServerSWUpdates tab to archServerSW list	
+� -add New Server SW fromCompareNSLookup tab to archServerSW	
+� � -take note of all DB and send to tanya and kristina at end	
+� � -take note of any GEARS deletions and send to anthony	
+-Run NSLOOKup on list and Send orphan servers to OIEO for discovery if necessary	
+

@@ -1,3 +1,20 @@
+function ClearUsptoDotGov(table) {
+	// So we can test as we go
+	if (typeof table === 'undefined') { return }
+	const searchRegExp = /\.uspto.gov/gi;
+	const replaceWith = '';
+
+	table.forEach(row => {
+		for (var prop in row) {
+			if (Object.prototype.hasOwnProperty.call(row, prop)) {
+				if (typeof prop === 'string' && prop.toLowerCase().match(/\.uspto.gov/i) )
+				{
+					prop = prop.replace(searchRegExp,replaceWith)
+				}
+			}
+		}
+	})
+}
 function ExactCyberToGEARSServerMatch(tables) {
 	var ecmoTable = tables['ecmo']
 	var gearsTable = tables['gears']
@@ -17,12 +34,41 @@ function ExactCyberToGEARSServerMatch(tables) {
 function IdentifyType(tables) {
 	var ecmoTable = tables['ecmo']
 	console.time('IdentifyType')
-	ecmoTable.forEach(ecmoRow => {
-		if( ecmoRow.Relay.match(/dev-/i)) { ecmoRow.Label = 'dev' }
-		else if( ecmoRow.OS.match(/win10/i)) { ecmoRow.Label = 'dev'}
-		else if(ecmoRow['GEARS EXACT MATCH']) { ecmoRow.Label = 'Exact Match'}
+	// var today = new Date().setHours(0,0,0,0)
+	// Get Max Date
+	var maxLastResponse = -Infinity
+	ecmoTable.map(
+			row => new Date(row['Last Report Time'])
+				.setHours(0,0,0,0))
+				.forEach(lastResponse => { 
+		if(lastResponse > maxLastResponse) { maxLastResponse = lastResponse }
 	})
-	console.log('IdentifyType=%d matched',ecmoTable.filter(row=>{return row.Label != null}).length)
+	// var maxLastResponse = Math.max.apply(maxLastResponses)
+	// eslint-disable-next-line no-unused-vars
+	var today = new Date().setHours(0,0,0,0)
+	ecmoTable.forEach(ecmoRow => {
+		if( ecmoRow.Relay.match(/dev-/i)) {
+			ecmoRow.Label = 'dev-dev' 
+		}
+		else if( ecmoRow.OS.match(/win10/i)) { 
+			ecmoRow.Label = 'dev-os'
+		}
+		else if( new Date(ecmoRow['Last Report Time']).setHours(0,0,0,0) != maxLastResponse) { 
+			ecmoRow.Label = 'dev-date' 
+		}
+		else if(ecmoRow['GEARS EXACT MATCH']) { 
+			ecmoRow.Label = 'Exact Match'
+		}
+	})
+	console.log('IdentifyType-dev-dev=%d matched',ecmoTable.filter(row=>{return row.Label == 'dev-dev'}).length)
+	console.log('IdentifyType-dev-os=%d matched',ecmoTable.filter(row=>{return row.Label == 'dev-os'}).length)
+	console.log('IdentifyType-dev-date=%d matched',ecmoTable.filter(row=>{return row.Label == 'dev-date'}).length)
+	console.log('IdentifyType-exactmatch=%d matched',ecmoTable.filter(row=>{return row.Label == 'Exact Match'}).length)
+	console.log('IdentifyType-unmatched',ecmoTable.filter(row=>{return row.Label == null}).length)
+	// Convert back from counting temp values to expected values
+	// tables['ecmo'].forEach(row => { 
+	// 	if (['dev-dev','dev-os','dev-date'].includes(row.Label)) { row.Label = 'dev' } 
+	// })
 	console.timeEnd('IdentifyType')
 }
 
@@ -30,7 +76,7 @@ function MoveCyberNonProd(tables) {
 	console.time('MoveCyberNonProd')
 	var ecmoTable = tables['ecmo']
 	console.log('MoveCyberNonProd=%d ON ENTRY',ecmoTable.length)
-	tables['dev'] = ecmoTable.filter(ecmoRow => { return ecmoRow.Label === 'dev' })
+	tables['dev'] = ecmoTable.filter(ecmoRow => { return ["dev-dev","dev-os","dev-date"].includes(ecmoRow.Label) })
 	tables['exactmatch'] = ecmoTable.filter(ecmoRow => { return ecmoRow.Label === 'Exact Match' })
 	tables['ecmo'] = ecmoTable.filter(ecmoRow => { return ecmoRow.Label === null })
 	console.log('MoveCyberNonProd-DEV=%d matched',tables['dev'].length)
@@ -108,3 +154,4 @@ module.exports.MoveCyberNonProd = MoveCyberNonProd
 module.exports.MatchOnSDAP = MatchOnSDAP
 module.exports.CheckManual = CheckManual
 module.exports.DiamondCheck = DiamondCheck
+module.exports.ClearUsptoDotGov = ClearUsptoDotGov

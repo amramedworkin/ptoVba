@@ -112,7 +112,9 @@ function  FindComponentinPML(tables) {
       } // End if
     } // Next iPML
   })
-
+  // for(var i = 0; i < PMLComponentNameMatchAllAry.length; i++ ) {
+  //   console.log(PMLComponentNameMatchAllAry[i],PMLComponentNameAllAry[i])
+  // }
 
   // Loop through Orginal ECMO/Cyber worksheet with added columns for Component identification
   for(var CyberRowCnt = 0;
@@ -285,6 +287,7 @@ function  FindComponentinPML(tables) {
       }
     }
   } // Next CyberRowCnt
+	console.log('FindComponentinPML=%d matched',cyberTable.filter(row=>{return row['Component from PML'] != null}).length)
   console.timeEnd("FindComponentinPML")
 } // End Sub FindComponentinPML(
 
@@ -369,7 +372,7 @@ function  ServerCheck(
 
   var GEARSServerNameCol = 'Server'
   // var GEARServerIDCol = 'ServerExternalID'
-  var GEARSServerNSLookupCol = 'NSLOOKUP'
+  var GEARSServerNSLookupCol =  'NSLOOKUP'
   var GEARSComponentNameCol = 'ComponentLookup'
 
   ServerNSLookupGEARS = ''
